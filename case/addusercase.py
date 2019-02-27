@@ -4,6 +4,7 @@ import unittest
 from config.mysqlconfig import MysqlDB, MysqlEnd
 from model.AddUserCase import *
 from config.TestConfig import TestConfig
+from util.getResult import GetResult
 
 
 class Test_adduser(unittest.TestCase):
@@ -25,7 +26,8 @@ class Test_adduser(unittest.TestCase):
         self.cursor.execute(sql, (1))
         self.query = AddUserCase(self.cursor.fetchone())
 
-        result = self.getResult()
+        #result = self.getResult()
+        result = GetResult().add_result(self.query)
         self.assertTrue(result)
         self.assertEqual(str(result), self.query.expected)
 
@@ -39,7 +41,7 @@ class Test_adduser(unittest.TestCase):
                        expected=self.query.expected
                        )
         header = {'Content-Type': "application/json"}
-        #self.store.set('login','true')
+        self.store.set('login','true')
         url = self.url
         req = requests.post(url, data=json.dumps(payload), headers=header, cookies=self.store)
         text_json = json.loads(req.text)

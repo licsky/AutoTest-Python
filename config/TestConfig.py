@@ -1,6 +1,8 @@
 import os
 import configparser
-import requests
+# import requests
+from requests import cookies
+
 
 class TestConfig():
     def __init__(self):
@@ -15,7 +17,7 @@ class TestConfig():
         self.url_login = self.__url + self.cf.get("url","login")
         self.url_adduser = self.__url + self.cf.get("url","adduser")
 
-        self.store = requests.cookies.RequestsCookieJar()
+        self.store = cookies.RequestsCookieJar()
 
     def db_config(self):
         os.chdir('/Users/lichao/workspace/autopython/AutoTest-Python/config')
